@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Telkom CloudPBX</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="padding-top: 80px;">
+  <!-- Top Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Telkom CloudPBX</a>
+    </div>
+  </nav>
+
+  <!-- Page -->
+  <div class="container">
+    <div class="row">
+
+      <!-- Sidebar Navigation -->
+      <div class="col-lg-3" style="text-align: center">
+        <img src="res/ic_user.png" style="width: 50%;">
+        <h3 id="id-username" class="my-4" style="text-align: center"></h3>
+        <button id="id-logout" type="button" class="btn btn-danger">Logout</button>
+        <div class="list-group" style="margin-top: 30px; margin-bottom: 30px;">
+          <a id="id-menu-pbx" href="pbxs.html" class="list-group-item"></a>
+          <a id="id-menu-pbx-requests" href="pbx-requests.html" class="list-group-item active"></a>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="col-lg-9">
+        <div class="card-body">
+          <h3 id="id-title-pbx-requests" class="card-title"></h3>
+          <h6 id="id-total-pbx-requests">Total PBX Requests: 0</h6>
+          <button id="id-create-new-pbx-request" type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-pbx-request" style="display: none;">Create New PBX Request</button>
+          <table id="id-table-pbx-requests" class="table table-bordered" style="text-align: center; margin-top: 15px;">
+            <thead>
+              <tr>
+                <th id="id-pbx-requests-row-user-id">User ID</th>
+                <th id="id-pbx-requests-row-user-name">Username</th>
+                <th id="id-pbx-requests-row-pbx-name">PBX Name</th>
+                <th id="id-pbx-requests-row-location">Location</th>
+                <th id="id-pbx-requests-row-extension">Extension</th>
+                <th id="id-pbx-requests-row-status">Status</th>
+                <th id="id-pbx-requests-row-action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="id-tbody-pbx-requests">
+            </tbody>
+          </table>
+          <div id="id-spinner-pbx-requests" style="text-align: center; display: none;">
+            <div style="margin: 10px;" class="spinner-border text-primary" role="status">
+            </div>
+            <h6>Retrieving data...</h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modal-pbx-request" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">New PBX Requests</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="id-pbx-request-name">PBX Name:</label>
+                <input type="text" class="form-control" id="id-pbx-request-name">
+              </div>
+              <div class="form-group">
+                <label for="id-pbx-request-location">Location:</label>
+                <select id="id-pbx-request-location" class="form-control">
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="id-pbx-request-extension">Number of Extension:</label>
+                <select class="form-control" id="id-pbx-request-extension" disabled>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div id="id-spinner-new-pbx-request" style="text-align: center; display: none;">
+                <div style="margin: 10px;" class="spinner-border text-primary" role="status">
+                </div>
+                <h6>Submitting data...</h6>
+              </div>
+              <button id="id-pbx-request-cancel" type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+              <button id="id-pbx-request-submit" type="button" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="py-5 bg-dark" style="position: absolute; bottom: 0; width: 100%;">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Telkom CloudPBX 2019</p>
+    </div>
+  </footer>
+
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/BaseConnection.js"></script>
+  <script src="js/Connection.js"></script>
+  <script src="js/Storage.js"></script>
+  <script src="js/Global.js"></script>
+  <script src="js/PbxRequests.js"></script>
+</body>
+</html>
