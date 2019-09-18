@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="google-signin-client_id" content="960717492474-ti0d5rj9d87uj5lba8bh9peubfdqqfqd.apps.googleusercontent.com">
     <title>Telkom CloudPBX</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -15,8 +16,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">Telkom CloudPBX</a>
-        <img id="id-google-login" src="res/im_google_login.png" width="200px">
-        <img id="id-facebook-login" src="res/im_facebook_login.png" width="200px">
+        <div id="id-sign-in" class="g-signin2" data-onsuccess="signInWithGoogle"></div>
+        <div id="id-spinner-sign-in" style="text-align: center; display: none;">
+            <div style="margin: 10px;" class="spinner-border text-primary" role="status">
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -36,5 +40,6 @@
 <script src="js/Connection.js"></script>
 <script src="js/Storage.js"></script>
 <script src="js/Index.js"></script>
+<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 </body>
 </html>

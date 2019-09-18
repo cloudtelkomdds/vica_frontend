@@ -1,4 +1,5 @@
-let connection  = new Connection();
+import { getConnection } from "Global";
+import { logout } from "Global";
 
 function displayBasedOnRole() {
     let role = Storage.get(Storage.KEY_USER_TYPE);
@@ -70,6 +71,12 @@ function displayAllPbxRequests(data) {
     });
 }
 
+function logout() {
+    Storage.deleteAll();
+
+    window.location.href = "index.html";
+}
+
 function displayPbxRequestCreation(response) {
     $("#modal-pbx-request").modal("hide");
     $("#id-pbx-request-cancel").show();
@@ -80,7 +87,7 @@ function displayPbxRequestCreation(response) {
         Storage.delete(Storage.KEY_ALL_PBX_REQUESTS);
         $("#id-tbody-pbx-requests").empty();
         showLoadingSpinner();
-        connection.getAllPbxRequests(displayAllPbxRequests);
+        getConnection().getAllPbxRequests(displayAllPbxRequests);
     }
     alert(response["message"]);
 }
@@ -92,7 +99,7 @@ function displayPbxRequestApproval(response) {
         Storage.delete(Storage.KEY_ALL_PBXS);
         $("#id-tbody-pbx-requests").empty();
         showLoadingSpinner();
-        connection.getAllPbxRequests(displayAllPbxRequests);
+        getConnection().getAllPbxRequests(displayAllPbxRequests);
     }
     alert(response["message"]);
 }
@@ -102,7 +109,7 @@ function displayPbxRequestDeletion(response) {
         Storage.delete(Storage.KEY_ALL_PBX_REQUESTS);
         $("#id-tbody-pbx-requests").empty();
         showLoadingSpinner();
-        connection.getAllPbxRequests(displayAllPbxRequests);
+        getConnection().getAllPbxRequests(displayAllPbxRequests);
     }
     alert(response["message"]);
 }
@@ -126,7 +133,7 @@ function createPbxRequest() {
         $("#id-pbx-request-cancel").hide();
         $("#id-pbx-request-submit").hide();
         $("#id-spinner-new-pbx-request").show();
-        connection.createPbxRequest(name, location, extension, displayPbxRequestCreation);
+        getConnection().createPbxRequest(name, location, extension, displayPbxRequestCreation);
     }
 }
 
@@ -137,7 +144,7 @@ function approvePbxRequest(pbxRequestId) {
         $("#id-delete-pbx-request-" + pbxRequestId).hide();
         $("#id-approve-pbx-request-" + pbxRequestId).hide();
         $("#id-spinner-action-pbx-request-" + pbxRequestId).show();
-        connection.approvePbxRequest(pbxRequestId, displayPbxRequestApproval);
+        getConnection().approvePbxRequest(pbxRequestId, displayPbxRequestApproval);
     }
 }
 
@@ -148,22 +155,16 @@ function deletePbxRequest(pbxRequestId) {
         $("#id-delete-pbx-request-" + pbxRequestId).hide();
         $("#id-approve-pbx-request-" + pbxRequestId).hide();
         $("#id-spinner-action-pbx-request-" + pbxRequestId).show();
-        connection.deletePbxRequest(pbxRequestId, displayPbxRequestDeletion);
+        getConnection().deletePbxRequest(pbxRequestId, displayPbxRequestDeletion);
     }
 }
 
 $(document).ready(function () {
     displayBasedOnRole();
-    connection.getLocations(displayLocations);
+    $("#id-logout").click(function (){ logout(); });
+    $("#id-pbx-request-submit").click(function (){ createPbxRequest(); });
     $("#id-tbody-pbx-requests").empty();
     showLoadingSpinner();
-    connection.getAllPbxRequests(displayAllPbxRequests);
-
-    $("#id-pbx-request-submit").click(function (){
-        createPbxRequest();
-    });
-
-    $("#id-logout").click(function (){
-        logout();
-    });
+    getConnection().getLocations(displayLocations);
+    getConnection().getAllPbxRequests(displayAllPbxRequests);
 });

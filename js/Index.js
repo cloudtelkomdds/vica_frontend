@@ -1,30 +1,34 @@
-let connection = new Connection();
+import { getConnection } from "Global";
+import { moveWindowTo } from "Global";
 
 function displayLoginResult(response) {
-    console.log(response);
-    if (!response["status"]) {
-        alert(response["message"]);
-    } else {
-        let data = response["data"];
-        if (data["is_admin"]) {
+    let status = response["status"];
+    let message = response["message"];
+    let data = response["data"];
+    if (!status)
+        alert(message);
+    else {
+        let isAdmin = data["is_admin"];
+        let name = data["name"];
+        let token = data["token"];
+        if (isAdmin)
             Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_ADMIN);
-        } else {
+        else
             Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_NONADMIN);
-        }
-        Storage.save(Storage.KEY_USER_NAME, data["name"]);
-        Storage.save(Storage.KEY_USER_TOKEN, data["token"]);
-        window.location.href = "file:///Users/ysyesa/Documents/telkom/cloudpbx-telkom-frontend/pbxs.html";
+        Storage.save(Storage.KEY_USER_NAME, name);
+        Storage.save(Storage.KEY_USER_TOKEN, token);
+        moveWindowTo("pbxs.html");
     }
+
+    $("#id-sign-in").show();
+    $("#id-spinner-sign-in").hide();
 }
 
-$(document).ready(function () {
-    $("#id-google-login").click(function (){
-        let email = "23519019@std.stei.itb.ac.id";
-        connection.signInWithGoogle(email, displayLoginResult)
-    });
+function signInWithGoogle(googleUser) {
+    $("#id-sign-in").hide();
+    $("#id-spinner-sign-in").show();
 
-    $("#id-facebook-login").click(function (){
-        let email = "13515088@std.stei.itb.ac.id";
-        connection.signInWithGoogle(email, displayLoginResult)
-    });
-});
+    let loginToken = googleUser.getAuthResponse().id_token;
+    getConnection().signInWithGoogle(loginToken, displayLoginResult);
+    gapi.auth2.getAuthInstance().signOut();
+}

@@ -1,4 +1,14 @@
-function logout() {
+let connection = new Connection();
+
+export function getConnection() {
+    return connection;
+}
+
+export function moveWindowTo(address) {
+    window.location.href = address;
+}
+
+export function logout() {
     Storage.deleteAll();
-    window.location.href = "file:///Users/ysyesa/Documents/telkom/cloudpbx-telkom-frontend/index.html";
+    moveWindowTo("index.html");
 }

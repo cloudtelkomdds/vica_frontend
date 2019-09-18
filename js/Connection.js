@@ -1,19 +1,18 @@
 class Connection {
     baseConnection = new BaseConnection();
 
-    signInWithGoogle(email, callback) {
+    signInWithGoogle(token, callback) {
         let data = {
-            "email": email
+            "token": token
         };
         this.baseConnection.signInWithGoogle(data, callback);
     }
 
     getLocations(callback) {
-        if (Storage.isExist(Storage.KEY_LOCATIONS)) {
+        if (Storage.isExist(Storage.KEY_LOCATIONS))
             callback(Storage.get(Storage.KEY_LOCATIONS));
-        } else {
+        else
             this.baseConnection.getLocations(cacheToStorage);
-        }
 
         function cacheToStorage(response) {
             let data = response["data"];
@@ -23,11 +22,10 @@ class Connection {
     }
 
     getAllPbxRequests(callback) {
-        if (Storage.isExist(Storage.KEY_ALL_PBX_REQUESTS)) {
+        if (Storage.isExist(Storage.KEY_ALL_PBX_REQUESTS))
             callback(Storage.get(Storage.KEY_ALL_PBX_REQUESTS));
-        } else {
+        else
             this.baseConnection.getAllPbxRequests(cacheToStorage);
-        }
 
         function cacheToStorage(response) {
             let data = response["data"];
@@ -60,11 +58,10 @@ class Connection {
     }
 
     getAllPbxs(callback) {
-        if (Storage.isExist(Storage.KEY_ALL_PBXS)) {
+        if (Storage.isExist(Storage.KEY_ALL_PBXS))
             callback(Storage.get(Storage.KEY_ALL_PBXS));
-        } else {
+        else
             this.baseConnection.getAllPbxs(cacheToStorage);
-        }
 
         function cacheToStorage(response) {
             let data = response["data"];

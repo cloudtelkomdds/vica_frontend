@@ -1,4 +1,5 @@
-let connection = new Connection();
+import { getConnection } from "Global";
+import { logout } from "Global";
 
 function displayBasedOnRole() {
     let role = Storage.get(Storage.KEY_USER_TYPE);
@@ -23,8 +24,8 @@ function displayBasedOnRole() {
 function displayAllPbxs(data) {
     hideLoadingSpinner();
     $("#id-total-pbxs").html("Total PBX Containers: " + data.length);
-    let role = Storage.get(Storage.KEY_USER_TYPE);
 
+    let role = Storage.get(Storage.KEY_USER_TYPE);
     for (let pbx of data) {
         let formattedPbx = "<tr>\n";
         if (role === Storage.USER_TYPE_ADMIN) {
@@ -52,6 +53,16 @@ function displayAllPbxs(data) {
     });
 }
 
+function displayPbxDeletion(response) {
+    if (response["status"]) {
+        Storage.delete(Storage.KEY_ALL_PBXS);
+        $("#id-tbody-pbxs").empty();
+        showLoadingSpinner();
+        getConnection().getAllPbxs(displayAllPbxs);
+    }
+    alert(response["message"]);
+}
+
 function showLoadingSpinner() {
     $("#id-spinner-pbxs").show();
 }
@@ -60,33 +71,20 @@ function hideLoadingSpinner() {
     $("#id-spinner-pbxs").hide();
 }
 
-function displayPbxDeletion(response) {
-    if (response["status"]) {
-        Storage.delete(Storage.KEY_ALL_PBXS);
-        $("#id-tbody-pbxs").empty();
-        showLoadingSpinner();
-        connection.getAllPbxs(displayAllPbxs);
-    }
-    alert(response["message"]);
-}
-
 function deletePbx(pbxId) {
     let message = "Are you sure want to delete the container?";
     let result = confirm(message);
     if (result) {
         $("#id-delete-pbx-" + pbxId).hide();
         $("#id-spinner-action-pbx-" + pbxId).show();
-        connection.deletePbx(pbxId, displayPbxDeletion);
+        getConnection().deletePbx(pbxId, displayPbxDeletion);
     }
 }
 
 $(document).ready(function () {
     displayBasedOnRole();
-    showLoadingSpinner();
+    $("#id-logout").click(function (){ logout(); });
     $("#id-tbody-pbxs").empty();
-    connection.getAllPbxs(displayAllPbxs);
-
-    $("#id-logout").click(function (){
-        logout();
-    });
+    showLoadingSpinner();
+    getConnection().getAllPbxs(displayAllPbxs);
 });
