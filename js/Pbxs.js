@@ -80,7 +80,7 @@ function deletePbx(pbxId) {
 
 $(document).ready(function () {
     displayBasedOnRole();
-    $("#id-logout").click(function (){ logout(); });
+    $("#id-logout").click(function (){ Global.logout(); });
     $("#id-tbody-pbxs").empty();
     showLoadingSpinner();
     Global.getConnection().getAllPbxs(displayAllPbxs);

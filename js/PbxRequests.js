@@ -68,12 +68,6 @@ function displayAllPbxRequests(data) {
     });
 }
 
-function logout() {
-    Storage.deleteAll();
-
-    window.location.href = "index.html";
-}
-
 function displayPbxRequestCreation(response) {
     $("#modal-pbx-request").modal("hide");
     $("#id-pbx-request-cancel").show();
@@ -158,7 +152,7 @@ function deletePbxRequest(pbxRequestId) {
 
 $(document).ready(function () {
     displayBasedOnRole();
-    $("#id-logout").click(function (){ logout(); });
+    $("#id-logout").click(function (){ Global.logout(); });
     $("#id-pbx-request-submit").click(function (){ createPbxRequest(); });
     $("#id-tbody-pbx-requests").empty();
     showLoadingSpinner();
