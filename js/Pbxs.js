@@ -1,6 +1,3 @@
-import { getConnection } from "Global";
-import { logout } from "Global";
-
 function displayBasedOnRole() {
     let role = Storage.get(Storage.KEY_USER_TYPE);
     if (role === Storage.USER_TYPE_ADMIN) {
@@ -58,7 +55,7 @@ function displayPbxDeletion(response) {
         Storage.delete(Storage.KEY_ALL_PBXS);
         $("#id-tbody-pbxs").empty();
         showLoadingSpinner();
-        getConnection().getAllPbxs(displayAllPbxs);
+        Global.getConnection().getAllPbxs(displayAllPbxs);
     }
     alert(response["message"]);
 }
@@ -77,7 +74,7 @@ function deletePbx(pbxId) {
     if (result) {
         $("#id-delete-pbx-" + pbxId).hide();
         $("#id-spinner-action-pbx-" + pbxId).show();
-        getConnection().deletePbx(pbxId, displayPbxDeletion);
+        Global.getConnection().deletePbx(pbxId, displayPbxDeletion);
     }
 }
 
@@ -86,5 +83,5 @@ $(document).ready(function () {
     $("#id-logout").click(function (){ logout(); });
     $("#id-tbody-pbxs").empty();
     showLoadingSpinner();
-    getConnection().getAllPbxs(displayAllPbxs);
+    Global.getConnection().getAllPbxs(displayAllPbxs);
 });

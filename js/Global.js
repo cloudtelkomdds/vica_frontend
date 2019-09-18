@@ -1,14 +1,16 @@
-let connection = new Connection();
+class Global {
+    static connection = new Connection();
 
-export function getConnection() {
-    return connection;
-}
+    static getConnection() {
+        return Global.connection;
+    }
 
-export function moveWindowTo(address) {
-    window.location.href = address;
-}
+    static moveWindowTo(address) {
+        window.location.href = address;
+    }
 
-export function logout() {
-    Storage.deleteAll();
-    moveWindowTo("index.html");
+    static logout() {
+        Storage.deleteAll();
+        Global.moveWindowTo("index.html");
+    }
 }
