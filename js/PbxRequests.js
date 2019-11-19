@@ -16,7 +16,7 @@ function displayBasedOnRole() {
         $("#id-create-new-pbx-request").show();
     }
 
-    let greeting = "Hi, " + Storage.get(Storage.KEY_USER_NAME);
+    let greeting = "Selamat datang, " + Storage.get(Storage.KEY_USER_NAME);
     $("#id-username").html(greeting);
 }
 
@@ -36,22 +36,22 @@ function displayAllPbxRequests(data) {
         let formattedPbxRequest = "<tr>\n";
         if (role === Storage.USER_TYPE_ADMIN) {
             formattedPbxRequest = formattedPbxRequest +
-                "<td>" + pbxRequest["user_id"] + "</td>\n" +
+                "<td>" + pbxRequest["id_user"] + "</td>\n" +
                 "<td>" + pbxRequest["user_name"] + "</td>\n";
         }
         formattedPbxRequest = formattedPbxRequest +
             "<td>" + pbxRequest["pbx_request_name"] + "</td>\n" +
             "<td>" + pbxRequest["location"] + "</td>\n" +
-            "<td>" + pbxRequest["extension"] + "</td>\n" +
+            "<td>" + pbxRequest["number_of_extension"] + "</td>\n" +
             "<td>" + pbxRequest["status"] + "</td>\n" +
             "<td>";
         if (role === Storage.USER_TYPE_ADMIN && pbxRequest["status"] === "Waiting For Approval") {
             formattedPbxRequest = formattedPbxRequest +
-                "<button id=\"id-approve-pbx-request-" + pbxRequest["pbx_request_id"] + "\" type=\"button\" class=\"btn btn-success\">Approve</button>";
+                "<button id=\"id-approve-pbx-request-" + pbxRequest["id_pbx_request"] + "\" type=\"button\" class=\"btn btn-success\">Approve</button>";
         }
         formattedPbxRequest = formattedPbxRequest +
-            "<div id=\"id-spinner-action-pbx-request-" + pbxRequest["pbx_request_id"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
-            "<img id=\"id-delete-pbx-request-" + pbxRequest["pbx_request_id"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
+            "<div id=\"id-spinner-action-pbx-request-" + pbxRequest["id_pbx_request"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
+            "<img id=\"id-delete-pbx-request-" + pbxRequest["id_pbx_request"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
             "</td>\n" +
             "</tr>";
         $("#id-tbody-pbx-requests").append(formattedPbxRequest);
@@ -84,7 +84,6 @@ function displayPbxRequestCreation(response) {
 }
 
 function displayPbxRequestApproval(response) {
-    console.log(response);
     if (response["status"]) {
         Storage.delete(Storage.KEY_ALL_PBX_REQUESTS);
         Storage.delete(Storage.KEY_ALL_PBXS);
@@ -116,15 +115,15 @@ function hideLoadingSpinner() {
 function createPbxRequest() {
     let name = $("#id-pbx-request-name").val();
     let location = $("#id-pbx-request-location").val();
-    let extension = $("#id-pbx-request-extension").val();
-    if (name === "" || location === "" || extension === "") {
+    let number_of_extension = $("#id-pbx-request-extension").val();
+    if (name === "" || location === "" || number_of_extension === "") {
         let message = "Please complete all required fields";
         alert(message);
     } else {
         $("#id-pbx-request-cancel").hide();
         $("#id-pbx-request-submit").hide();
         $("#id-spinner-new-pbx-request").show();
-        Global.getConnection().createPbxRequest(name, location, extension, displayPbxRequestCreation);
+        Global.getConnection().createPbxRequest(name, location, number_of_extension, displayPbxRequestCreation);
     }
 }
 

@@ -27,18 +27,17 @@ function displayAllPbxs(data) {
         let formattedPbx = "<tr>\n";
         if (role === Storage.USER_TYPE_ADMIN) {
             formattedPbx = formattedPbx +
-                "<td>" + pbx["user_id"] + "</td>\n" +
+                "<td>" + pbx["id_user"] + "</td>\n" +
                 "<td>" + pbx["user_name"] + "</td>\n";
         }
         formattedPbx = formattedPbx +
-            "<td>" + pbx["pbx_name"] + "</td>\n" +
-            "<td>" + pbx["container"] + "</td>\n" +
+            "<td><a href='user_extension.html?id=" + pbx["id_pbx"] + "'>" + pbx["pbx_name"] + "</a></td>\n" +
             "<td>" + pbx["location"] + "</td>\n" +
-            "<td>" + pbx["extension"] + "</td>\n" +
-            "<td>" + pbx["host_address"] + ":" + pbx["host_port"] + "</td>\n" +
+            "<td>" + pbx["number_of_extension"] + "</td>\n" +
+            "<td>" + pbx["vm_address"] + "</td>\n" +
             "<td>" +
-            "<div id=\"id-spinner-action-pbx-" + pbx["pbx_id"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
-            "<img id=\"id-delete-pbx-" + pbx["pbx_id"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
+            "<div id=\"id-spinner-action-pbx-" + pbx["id_pbx"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
+            "<img id=\"id-delete-pbx-" + pbx["id_pbx"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
             "</td>\n" +
             "</tr>";
         $("#id-tbody-pbxs").append(formattedPbx);

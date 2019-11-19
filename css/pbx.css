@@ -1,0 +1,73 @@
+/* Side Navbar */
+
+/* .navbar{
+    text-align: center;
+    width: 150px;
+} */
+
+/* Top Navbar
+
+.logo{
+  width: 80px;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+} */
+
+#accordionSidebar {
+    background-color: #F2F2F2;
+}
+/* #sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #ECECEC;
+    color: black;
+    transition: all 0.3s;
+    padding-left: 50px;
+    margin-right: 50px;
+} */
+
+.sidebar{
+    background: #7FB2F0;
+}
+
+.col-lg-9{
+    margin-left: 300px;
+}
+
+#page{
+    background: black;
+}
+
+#request {
+    color: red;
+}
+#list{
+    color: red;
+}
+
+.back-btn:hover{
+     background-color: gray;
+     color: white;
+}
+.back-btn{
+    border-radius: 50%;
+}
+
+.column{
+     width: 50%;
+}
+
+/* .nav-link{
+    color : #54ACE6;
+} */
+
+@media screen and (max-width: 600px) {
+
+}

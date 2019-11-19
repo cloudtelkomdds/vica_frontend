@@ -7,40 +7,132 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="google-signin-client_id" content="960717492474-ti0d5rj9d87uj5lba8bh9peubfdqqfqd.apps.googleusercontent.com">
+
+        <!-- Boostrap & CSS -->
+        <!-- <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/index.css">
+
+        <!-- My fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Viga&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Viga&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    
+        <!-- JS -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="js/BaseConnection.js"></script>
+        <script src="js/Connection.js"></script>
+        <script src="js/Storage.js"></script>
+        <script src="js/Global.js"></script>
+        <script src="js/Index.js"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+
+
     <title>Telkom CloudPBX</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
-<body style="padding-top: 80px;" background="res/im_background.jpg">
-    <!-- Top Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Telkom CloudPBX</a>
-            <div id="id-sign-in" class="g-signin2" data-onsuccess="signInWithGoogle"></div>
-            <div id="id-spinner-sign-in" style="text-align: center; display: none;">
-                <div style="margin: 10px;" class="spinner-border text-primary" role="status">
-                </div>
+<!-- Top Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <img src="res\logo.png" class="rounded logo" alt="cloudpbx-logo">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="ml-auto">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">beranda<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">masuk</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </nav>
-
-    <!-- Page -->
-    <div class="container">
     </div>
+</nav>
+<!-- Akhir Navigation -->
 
-    <footer class="py-5 bg-dark" style="position: absolute; bottom: 0; width: 100%;">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Telkom CloudPBX 2019</p>
+<!-- Jumbotron -->
+<div class="jumbotron jumbotron-fluid bg-white header">
+    <center>
+        <div class="text-center">
+            <img src="res\jumbotron.png" class="rounded jumbotron-img" alt="header-icon">
         </div>
-    </footer>
+        <h1 class="display-4 header-text">New way to<br>communicate<br>with CloudPBX</h1>
+        <h4 class="lead">Komunikasi internal enterprise lebih mudah <br> dan cepat dengan CloudPBX.
+        </h4>
+        <a class="btn btn-default rounded-pill font-weight-lighter" href="login.html" role="button">Mulai Sekarang</a>
+</div>
+    </center>
+<!-- Akhir Jumbotron -->
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/BaseConnection.js"></script>
-    <script src="js/Connection.js"></script>
-    <script src="js/Storage.js"></script>
-    <script src="js/Global.js"></script>
-    <script src="js/Index.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+<!-- Page
+<center>
+    <div class="container feature">
+        <h1 class="feature-head">Kenapa CloudPBX?</h1>
+        <div class="row">
+            <div class="col-lg">
+                <img src="res\icon\low-cost.png" width="75px" class="feature-icon rounded float-left"
+                    alt="lowcost">
+                <h4 class="feature-title">Low Cost</h4>
+                <p class="keterangan">Tidak keluar banyak biaya!</p>
+            </div>
+            <div class="col-lg">
+                <img src="res\icon\easy-to-use.png" width="75px" class="feature-icon rounded float-left"
+                    alt="easy-to-use">
+                <h4 class="feature-title">Easy to Use</h4>
+                <p class="keterangan">Mudah digunakan.</p>
+            </div>
+            <div class="col-lg">
+                <img src="res\icon\efficient.png" width="75px" class="feature-icon rounded float-left"
+                    alt="efficient">
+                <h4 class="feature-title">Efficient</h4>
+                <p class="keterangan">Menghemat waktu Anda!</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</center> -->
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__content">
+        <h1>
+            <img src="res\logo.png" width="130px" class="rounded" alt="cloudpbx-logo">
+        </h1>
+        <!-- <ul>
+                <li> <router-link to="/"> Documentation </router-link> </li>
+                <li> <router-link to="/"> Newsletter </router-link> </li>
+                <li> <router-link to="/"> Product </router-link> </li>
+                <li> <router-link to="/"> Contact </router-link> </li>
+              </ul> -->
+    </div>
+    <div class="footer__sosmed">
+        <ul>
+            <li>
+                <router-link to="/"> <i class="fab fa-facebook-f"></i> </router-link>
+            </li>
+            <li>
+                <router-link to="/"> <i class="fab fa-github"></i> </router-link>
+            </li>
+            <li>
+                <router-link to="/"> <i class="fab fa-twitter"></i> </router-link>
+            </li>
+            <li>
+                <router-link to="/"> <i class="fab fa-youtube"></i> </router-link>
+            </li>
+        </ul>
+    </div>
+</footer>
+<!-- Akhir Footer -->
+
 </body>
 </html>

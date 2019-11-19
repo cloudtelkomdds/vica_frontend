@@ -1,0 +1,54 @@
+/* Image */
+
+.nav-link{
+    font-family: Roboto;
+    text-transform: lowercase;
+    margin-right: 30px;  
+
+}
+.logo{
+  width: 80px;
+}
+
+.icon{
+position: absolute;
+  top: 0;
+  left: 30px;
+  bottom: 20px;
+  right: 0;
+  width: auto; /* to keep proportions */
+  height: auto; /* to keep proportions */
+  max-width: 100%; /* not to stand out from div */
+  max-height: 100%; /* not to stand out from div */
+  margin: auto auto 0; /* position to bottom and center */
+}
+
+.row{
+  margin-top: 45px;
+}
+
+/* .body-login{
+  background-image: url("res/wave.png");
+  background-color:#ceddef;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}  */
+
+.body-login {
+  background-color: white;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+} 
+
+@media screen and (max-width:600px) {
+.body-login{
+  background-image: url("res/wave.png");
+  background-color:#CEDDEF;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom;
+}
+
+}

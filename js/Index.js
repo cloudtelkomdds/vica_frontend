@@ -1,4 +1,5 @@
 function displayLoginResult(response) {
+    console.log(response);
     let status = response["status"];
     let message = response["message"];
     let data = response["data"];
@@ -8,13 +9,17 @@ function displayLoginResult(response) {
         let isAdmin = data["is_admin"];
         let name = data["name"];
         let token = data["token"];
-        if (isAdmin)
-            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_ADMIN);
-        else
-            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_NONADMIN);
         Storage.save(Storage.KEY_USER_NAME, name);
         Storage.save(Storage.KEY_USER_TOKEN, token);
-        Global.moveWindowTo("pbxs.html");
+        if (isAdmin) {
+            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_ADMIN);
+            Global.moveWindowTo("admin_pbx.html");
+        }
+        else {
+            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_NONADMIN);
+            Global.moveWindowTo("user_pbx.html");
+        }
+
     }
 
     $("#id-sign-in").show();
