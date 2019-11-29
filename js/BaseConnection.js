@@ -1,5 +1,5 @@
 class BaseConnection {
-    URL_BASE = "http://localhost:5000/";
+    URL_BASE = "http://35.186.151.35:5000/";
     URL_SIGN_IN_WITH_GOOGLE = "sign_in_with_google";
     URL_GET_LOCATIONS = "get_locations";
     URL_CREATE_PBX_REQUEST = "create_pbx_request";
