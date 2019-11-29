@@ -1,3 +1,5 @@
+// Temporarily, cache is disabled. Please take a look for improvement.
+
 class Connection {
     baseConnection = new BaseConnection();
 
@@ -16,7 +18,7 @@ class Connection {
 
         function cacheToStorage(response) {
             let data = response["data"];
-            Storage.save(Storage.KEY_LOCATIONS, data);
+            // Storage.save(Storage.KEY_LOCATIONS, data);
             callback(data);
         }
     }
@@ -29,7 +31,7 @@ class Connection {
 
         function cacheToStorage(response) {
             let data = response["data"];
-            Storage.save(Storage.KEY_ALL_PBX_REQUESTS, data);
+            // Storage.save(Storage.KEY_ALL_PBX_REQUESTS, data);
             callback(data);
         }
     }
@@ -70,8 +72,8 @@ class Connection {
                 if (item["vm_address"] == "0.0.0.0")
                     shouldBeCached = false;
             }
-            if (shouldBeCached)
-                Storage.save(Storage.KEY_ALL_PBXS, data);
+            // if (shouldBeCached)
+            //     Storage.save(Storage.KEY_ALL_PBXS, data);
             callback(data);
         }
     }
