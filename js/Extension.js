@@ -1,131 +1,152 @@
-ID_PBX = -1
-ID_UPDATED_EXTENSION = -1
+import {GLOBAL} from "./Global.js";
+import * as Storage from "./Storage.js"
 
-function displayAllExtensions(data) {
-	DATA_EXTENSIONS = data;
-	number = 0
-    for (let extension of data) {
-    	number = number + 1
-        let formattedExtension = "<tr>\n" + 
-        	"<td>" + number + "</td>\n" +
-            "<td>" + extension["username"] + "</td>\n" +
-            "<td>" + extension["secret"] + "</td>\n" +
-            "<td>" +
-            "<div id=\"id-spinner-action-extension-" + extension["id_extension"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
-            "<img id=\"id-delete-extension-" + extension["id_extension"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
-            "<img id=\"id-click-update-extension-" + extension["id_extension"] + "\" alt=\"Icon for updating\" src=\"res/ic_edit.png\" style=\"width: 20px;\">" +
-            "</td>\n" +
-            "</tr>";
-        $("#id-tbody-extensions").append(formattedExtension);
-    }
+class Extension {
+	constructor(id_pbx) {
+		this.storage = new Storage.Storage();
+		this.ID_PBX = id_pbx;
+		this.ID_UPDATED_EXTENSION = -1;
+	}
 
-    $("[id^=\"id-delete-extension\"]").click(function (event) {
-        let idExtension = event.target.id.split("-")[3];
-        deleteExtension(idExtension);
-    });
+	displayAllExtensions(data) {
+		let number = 0;
+		for (let extension of data) {
+			number = number + 1;
+			let formattedExtension = "<tr>\n" +
+				"<td>" + number + "</td>\n" +
+				"<td>" + extension["username"] + "</td>\n" +
+				"<td>" + extension["secret"] + "</td>\n" +
+				"<td>" +
+				"<div id=\"id-spinner-action-extension-" + extension["id_extension"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
+				"<img id=\"id-delete-extension-" + extension["id_extension"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
+				"<img id=\"id-click-update-extension-" + extension["id_extension"] + "\" alt=\"Icon for updating\" src=\"res/ic_edit.png\" style=\"width: 20px;\">" +
+				"</td>\n" +
+				"</tr>";
+			$("#id-tbody-extensions").append(formattedExtension);
+		}
 
-    $("[id^=\"id-click-update-extension\"]").click(function (event) {
-        ID_UPDATED_EXTENSION = event.target.id.split("-")[4];
-        selected_extension = data[0];
-        for (let extension of data) {
-        	if (extension["id_extension"] == ID_UPDATED_EXTENSION) {
-        		selected_extension = extension;
-        	}
-        }
-        $("#id-update-extension-username").val(selected_extension["username"]);
-        $("#id-update-extension-secret").val(selected_extension["secret"]);
-        $("#modal-update-pbx-extension").modal("show");
-    });
-}
+		let self = this;
+		$("[id^=\"id-delete-extension\"]").click(function (event) {
+			let idExtension = event.target.id.split("-")[3];
+			self.deleteExtension(idExtension);
+		});
 
-function displayExtensionDeletion(response) {
-    if (response["status"]) {
-        $("#id-tbody-extensions").empty();
-		Global.getConnection().getAllExtensions(ID_PBX, displayAllExtensions);
-    }
-    alert(response["message"]);
-}
+		$("[id^=\"id-click-update-extension\"]").click(function (event) {
+			self.ID_UPDATED_EXTENSION = event.target.id.split("-")[4];
+			let selected_extension = data[0];
+			for (let extension of data) {
+				if (extension["id_extension"] === self.ID_UPDATED_EXTENSION) {
+					selected_extension = extension;
+				}
+			}
+			$("#id-update-extension-username").val(selected_extension["username"]);
+			$("#id-update-extension-secret").val(selected_extension["secret"]);
+			$("#modal-update-pbx-extension").modal("show");
+		});
+	}
 
-function deleteExtension(idExtension) {
-    let message = "Are you sure want to delete the extension?";
-    let result = confirm(message);
-    if (result) {
-        $("#id-delete-extension-" + idExtension).hide();
-        $("#id-click-update-extension-" + idExtension).hide();
-        $("#id-spinner-action-extension-" + idExtension).show();
-        Global.getConnection().deleteExtension(idExtension, displayExtensionDeletion);
-    }
-}
+	displayExtensionDeletion(response) {
+		if (response["status"]) {
+			$("#id-tbody-extensions").empty();
+			let self = this;
+			GLOBAL.connection.getAllExtensions(this.ID_PBX, function (data) {
+				self.displayAllExtensions(data);
+			});
+		}
+		alert(response["message"]);
+	}
 
-function displayExtensionUpdate(response) {
-    $("#modal-update-pbx-extension").modal("hide");
-    $("#id-update-extension-cancel").show();
-    $("#id-update-extension-submit").show();
-    $("#id-update-extension-username").html("");
-    $("#id-update-extension-secret").html("");
-    $("#id-spinner-update-extension").hide();
-    if (response["status"]) {
-        $("#id-tbody-extensions").empty();
-        Global.getConnection().getAllExtensions(ID_PBX, displayAllExtensions);
-    }
-    alert(response["message"]);
-}
+	deleteExtension(idExtension) {
+		let message = "Are you sure want to delete the extension?";
+		let result = confirm(message);
+		if (result) {
+			$("#id-delete-extension-" + idExtension).hide();
+			$("#id-click-update-extension-" + idExtension).hide();
+			$("#id-spinner-action-extension-" + idExtension).show();
+			let self = this;
+			GLOBAL.connection.deleteExtension(idExtension, function (data) {
+				self.displayExtensionDeletion(data);
+			});
+		}
+	}
 
-function updateExtension() {
-	let username = $("#id-update-extension-username").val();
-	let secret = $("#id-update-extension-secret").val();
-    if (username === "" || secret === "") {
-        let message = "Please complete all required fields";
-        alert(message);
-    } else {
-        $("#id-update-extension-cancel").hide();
-        $("#id-update-extension-submit").hide();
-        $("#id-spinner-update-extension").show();
-        Global.getConnection().updateExtension(ID_UPDATED_EXTENSION, username, secret, displayExtensionUpdate);
-    }
-}
+	displayExtensionUpdate(response) {
+		$("#modal-update-pbx-extension").modal("hide");
+		$("#id-update-extension-cancel").show();
+		$("#id-update-extension-submit").show();
+		$("#id-update-extension-username").html("");
+		$("#id-update-extension-secret").html("");
+		$("#id-spinner-update-extension").hide();
+		if (response["status"]) {
+			$("#id-tbody-extensions").empty();
+			let self = this;
+			GLOBAL.connection.getAllExtensions(this.ID_PBX, function (data) {
+				self.displayAllExtensions(data);
+			});
+		}
+		alert(response["message"]);
+	}
 
-function displayExtensionCreation(response) {
-    $("#modal-pbx-extension").modal("hide");
-    $("#id-new-extension-cancel").show();
-    $("#id-new-extension-submit").show();
-    $("#id-extension-username").html("");
-    $("#id-extension-secret").html("");
-    $("#id-spinner-new-extension").hide();
-    if (response["status"]) {
-        $("#id-tbody-extensions").empty();
-        Global.getConnection().getAllExtensions(ID_PBX, displayAllExtensions);
-    }
-    alert(response["message"]);
-}
+	updateExtension() {
+		let username = $("#id-update-extension-username").val();
+		let secret = $("#id-update-extension-secret").val();
+		if (username === "" || secret === "") {
+			let message = "Please complete all required fields";
+			alert(message);
+		} else {
+			$("#id-update-extension-cancel").hide();
+			$("#id-update-extension-submit").hide();
+			$("#id-spinner-update-extension").show();
+			let self = this;
+			GLOBAL.connection.updateExtension(this.ID_UPDATED_EXTENSION, username, secret, function (data) {
+				self.displayExtensionUpdate(data);
+			});
+		}
+	}
 
-function createNewExtension() {
-	let id_pbx = ID_PBX;
-	let username = $("#id-extension-username").val();
-	let secret = $("#id-extension-secret").val();
-    if (username === "" || secret === "") {
-        let message = "Please complete all required fields";
-        alert(message);
-    } else {
-        $("#id-new-extension-cancel").hide();
-        $("#id-new-extension-submit").hide();
-        $("#id-spinner-new-extension").show();
-        Global.getConnection().createExtension(id_pbx, username, secret, displayExtensionCreation);
-    }
+	displayExtensionCreation(response) {
+		$("#modal-pbx-extension").modal("hide");
+		$("#id-new-extension-cancel").show();
+		$("#id-new-extension-submit").show();
+		$("#id-extension-username").html("");
+		$("#id-extension-secret").html("");
+		$("#id-spinner-new-extension").hide();
+		if (response["status"]) {
+			$("#id-tbody-extensions").empty();
+			let self = this;
+			GLOBAL.connection.getAllExtensions(this.ID_PBX, function (data) {
+				self.displayAllExtensions(data);
+			});
+		}
+		alert(response["message"]);
+	}
+
+	createNewExtension() {
+		let id_pbx = this.ID_PBX;
+		let username = $("#id-extension-username").val();
+		let secret = $("#id-extension-secret").val();
+		if (username === "" || secret === "") {
+			let message = "Please complete all required fields";
+			alert(message);
+		} else {
+			$("#id-new-extension-cancel").hide();
+			$("#id-new-extension-submit").hide();
+			$("#id-spinner-new-extension").show();
+			let self = this;
+			GLOBAL.connection.createExtension(id_pbx, username, secret, function (data) {
+				self.displayExtensionCreation(data);
+			});
+		}
+	}
 }
 
 $(document).ready(function () {
-    $("#id-new-extension-submit").click(function (){ createNewExtension(); });
-    $("#id-update-extension-submit").click(function (){ updateExtension(); });
+	let id_pbx = window.location.search.substr(1).split("=")[1];
+	let EXTENSION = new Extension(id_pbx);
+    $("#id-new-extension-submit").click(function (){ EXTENSION.createNewExtension(); });
+    $("#id-update-extension-submit").click(function (){ EXTENSION.updateExtension(); });
     $("#id-tbody-extensions").empty();
-	ID_PBX = window.location.search.substr(1).split("=")[1];
-	Global.getConnection().getAllExtensions(ID_PBX, displayAllExtensions);
-
-    // displayBasedOnRole();
-    // $("#id-logout").click(function (){ Global.logout(); });
-    // $("#id-pbx-request-submit").click(function (){ createPbxRequest(); });
-    // $("#id-tbody-pbx-requests").empty();
-    // showLoadingSpinner();
-    // Global.getConnection().getLocations(displayLocations);
-    // Global.getConnection().getAllPbxRequests(displayAllPbxRequests);
+	GLOBAL.connection.getAllExtensions(EXTENSION.ID_PBX, function (data) {
+		EXTENSION.displayAllExtensions(data);
+	});
 });

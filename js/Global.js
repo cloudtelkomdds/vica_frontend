@@ -1,16 +1,20 @@
+import * as Connection from "./Connection.js"
+import * as Storage from "./Storage.js"
+
 class Global {
-    static connection = new Connection();
+	constructor() {
+		this.connection = new Connection.Connection();
+		this.storage = new Storage.Storage();
+	}
 
-    static getConnection() {
-        return Global.connection;
-    }
+	moveWindowTo(address) {
+		window.location.href = address;
+	}
 
-    static moveWindowTo(address) {
-        window.location.href = address;
-    }
-
-    static logout() {
-        Storage.deleteAll();
-        Global.moveWindowTo("index.html");
-    }
+	logout() {
+		this.storage.deleteAll();
+		this.moveWindowTo("index.html");
+	}
 }
+
+export let GLOBAL = new Global();

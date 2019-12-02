@@ -1,36 +1,46 @@
-function displayLoginResult(response) {
-    console.log(response);
-    let status = response["status"];
-    let message = response["message"];
-    let data = response["data"];
-    if (!status)
-        alert(message);
-    else {
-        let isAdmin = data["is_admin"];
-        let name = data["name"];
-        let token = data["token"];
-        Storage.save(Storage.KEY_USER_NAME, name);
-        Storage.save(Storage.KEY_USER_TOKEN, token);
-        if (isAdmin) {
-            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_ADMIN);
-            Global.moveWindowTo("admin_pbx.html");
-        }
-        else {
-            Storage.save(Storage.KEY_USER_TYPE, Storage.USER_TYPE_NONADMIN);
-            Global.moveWindowTo("user_pbx.html");
-        }
+import * as Constant from "./Constant.js"
+import {GLOBAL} from "./Global.js";
+import * as Storage from "./Storage.js"
 
-    }
+class Index {
+	constructor() {
+		this.storage = new Storage.Storage();
+	}
 
-    $("#id-sign-in").show();
-    $("#id-spinner-sign-in").hide();
+	displayLoginResult(response) {
+		let status = response["status"];
+		let message = response["message"];
+		let data = response["data"];
+		if (!status)
+			alert(message);
+		else {
+			let isAdmin = data["is_admin"];
+			let name = data["name"];
+			let token = data["token"];
+			this.storage.save(Constant.STORAGE_KEY_USER_NAME, name);
+			this.storage.save(Constant.STORAGE_KEY_USER_TOKEN, token);
+			if (isAdmin) {
+				this.storage.save(Constant.STORAGE_KEY_USER_TYPE, Constant.USER_TYPE_ADMIN);
+				GLOBAL.moveWindowTo("admin_pbx.html");
+			}
+			else {
+				this.storage.save(Constant.STORAGE_KEY_USER_TYPE, Constant.USER_TYPE_NONADMIN);
+				GLOBAL.moveWindowTo("user_pbx.html");
+			}
+		}
+		$("#id-sign-in").show();
+		$("#id-spinner-sign-in").hide();
+	}
 }
 
-function signInWithGoogle(googleUser) {
-    $("#id-sign-in").hide();
-    $("#id-spinner-sign-in").show();
+let INDEX = new Index();
+window.signInWithGoogle = function(googleUser) {
+	$("#id-sign-in").hide();
+	$("#id-spinner-sign-in").show();
 
-    let loginToken = googleUser.getAuthResponse().id_token;
-    Global.getConnection().signInWithGoogle(loginToken, displayLoginResult);
-    gapi.auth2.getAuthInstance().signOut();
-}
+	let loginToken = googleUser.getAuthResponse().id_token;
+	GLOBAL.connection.signInWithGoogle(loginToken, function(response){
+		INDEX.displayLoginResult(response);
+	});
+	gapi.auth2.getAuthInstance().signOut();
+};

@@ -1,7 +1,13 @@
 // Temporarily, cache is disabled. Please take a look for improvement.
+import * as BaseConnection from "./BaseConnection.js"
+import * as Constant from "./Constant.js"
+import * as Storage from "./Storage.js"
 
-class Connection {
-    baseConnection = new BaseConnection();
+export class Connection {
+	constructor() {
+		this.baseConnection = new BaseConnection.BaseConnection();
+		this.storage = new Storage.Storage();
+	}
 
     signInWithGoogle(token, callback) {
         let data = {
@@ -11,27 +17,27 @@ class Connection {
     }
 
     getLocations(callback) {
-        if (Storage.isExist(Storage.KEY_LOCATIONS))
-            callback(Storage.get(Storage.KEY_LOCATIONS));
+        if (this.storage.isExist(Constant.STORAGE_KEY_LOCATIONS))
+            callback(this.storage.get(Constant.STORAGE_KEY_LOCATIONS));
         else
             this.baseConnection.getLocations(cacheToStorage);
 
         function cacheToStorage(response) {
             let data = response["data"];
-            // Storage.save(Storage.KEY_LOCATIONS, data);
+            // this.storage.save(Constant.STORAGE_KEY_LOCATIONS, data);
             callback(data);
         }
     }
 
     getAllPbxRequests(callback) {
-        if (Storage.isExist(Storage.KEY_ALL_PBX_REQUESTS))
-            callback(Storage.get(Storage.KEY_ALL_PBX_REQUESTS));
+        if (this.storage.isExist(Constant.STORAGE_KEY_ALL_PBX_REQUESTS))
+            callback(this.storage.get(Constant.STORAGE_KEY_ALL_PBX_REQUESTS));
         else
             this.baseConnection.getAllPbxRequests(cacheToStorage);
 
         function cacheToStorage(response) {
             let data = response["data"];
-            // Storage.save(Storage.KEY_ALL_PBX_REQUESTS, data);
+            // this.storage.save(Constant.STORAGE_KEY_ALL_PBX_REQUESTS, data);
             callback(data);
         }
     }
@@ -60,20 +66,13 @@ class Connection {
     }
 
     getAllPbxs(callback) {
-        if (Storage.isExist(Storage.KEY_ALL_PBXS))
-            callback(Storage.get(Storage.KEY_ALL_PBXS));
+        if (this.storage.isExist(Constant.STORAGE_KEY_ALL_PBXS))
+            callback(this.storage.get(Constant.STORAGE_KEY_ALL_PBXS));
         else
             this.baseConnection.getAllPbxs(cacheToStorage);
 
         function cacheToStorage(response) {
             let data = response["data"];
-            var shouldBeCached = true;
-            for (var item in data) {
-                if (item["vm_address"] == "0.0.0.0")
-                    shouldBeCached = false;
-            }
-            // if (shouldBeCached)
-            //     Storage.save(Storage.KEY_ALL_PBXS, data);
             callback(data);
         }
     }
@@ -88,7 +87,7 @@ class Connection {
     getAllExtensions(idPbx, callback) {
         let data = {
             "id_pbx": idPbx
-        }
+        };
         this.baseConnection.getAllExtensions(data, noCacheToStorage);
 
         function noCacheToStorage(response) {
@@ -102,7 +101,7 @@ class Connection {
             "id_pbx": idPbx,
             "username": username,
             "secret": secret
-        }
+        };
         this.baseConnection.createExtension(data, callback);
     }
 
@@ -111,14 +110,14 @@ class Connection {
             "id_extension": idExtension,
             "username": username,
             "secret": secret
-        }
+        };
         this.baseConnection.updateExtension(data, callback);
     }
 
     deleteExtension(idExtension, callback) {
         let data = {
             "id_extension": idExtension
-        }
+        };
         this.baseConnection.deleteExtension(data, callback);
     }
 }
