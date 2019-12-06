@@ -54,7 +54,7 @@ class PbxRequests {
 				"<td>" + pbxRequest["number_of_extension"] + "</td>\n" +
 				"<td>" + pbxRequest["status"] + "</td>\n" +
 				"<td>";
-			if (role === Constant.USER_TYPE_ADMIN && pbxRequest["status"] === "Waiting For Approval") {
+			if (role === Constant.USER_TYPE_ADMIN && pbxRequest["status"] === "Pending") {
 				formattedPbxRequest = formattedPbxRequest +
 					"<button id=\"id-approve-pbx-request-" + pbxRequest["id_pbx_request"] + "\" type=\"button\" class=\"btn btn-success\">Approve</button>";
 			}
@@ -79,6 +79,7 @@ class PbxRequests {
 	}
 
 	displayPbxRequestCreation(response) {
+		$("#id-pbx-request-name").val("");
 		$("#modal-pbx-request").modal("hide");
 		$("#id-pbx-request-cancel").show();
 		$("#id-pbx-request-submit").show();

@@ -105,6 +105,8 @@ class Extension {
 	}
 
 	displayExtensionCreation(response) {
+		$("#id-extension-username").val("");
+		$("#id-extension-secret").val("");
 		$("#modal-pbx-extension").modal("hide");
 		$("#id-new-extension-cancel").show();
 		$("#id-new-extension-submit").show();
