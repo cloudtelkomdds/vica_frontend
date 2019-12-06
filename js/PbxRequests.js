@@ -31,7 +31,7 @@ class PbxRequests {
 
 	displayLocations(data) {
 		for (let location of data) {
-			let formattedLocation = "<option>" + location["name"] + "</option>";
+			let formattedLocation = "<option>" + location["location_name"] + "</option>";
 			$("#id-pbx-request-location").append(formattedLocation);
 		}
 	}
