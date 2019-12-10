@@ -45,14 +45,13 @@ class PbxRequests {
 			let formattedPbxRequest = "<tr>\n";
 			if (role === Constant.USER_TYPE_ADMIN) {
 				formattedPbxRequest = formattedPbxRequest +
-					"<td>" + pbxRequest["id_user"] + "</td>\n" +
-					"<td>" + pbxRequest["user_name"] + "</td>\n";
+					"<td>" + pbxRequest["user_email"] + "</td>\n";
 			}
 			formattedPbxRequest = formattedPbxRequest +
+				"<td>" + pbxRequest["date"] + "</td>\n" +
 				"<td>" + pbxRequest["pbx_request_name"] + "</td>\n" +
 				"<td>" + pbxRequest["location"] + "</td>\n" +
 				"<td>" + pbxRequest["number_of_extension"] + "</td>\n" +
-				"<td>" + pbxRequest["status"] + "</td>\n" +
 				"<td>";
 			if (role === Constant.USER_TYPE_ADMIN && pbxRequest["status"] === "Pending") {
 				formattedPbxRequest = formattedPbxRequest +

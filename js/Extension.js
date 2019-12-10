@@ -1,5 +1,6 @@
 import {GLOBAL} from "./Global.js";
 import * as Storage from "./Storage.js"
+import * as Constant from "./Constant.js";
 
 class Extension {
 	constructor(id_pbx) {
@@ -21,9 +22,10 @@ class Extension {
 		for (let extension of data) {
 			number = number + 1;
 			let formattedExtension = "<tr>\n" +
-				"<td>" + number + "</td>\n" +
+				"<td>" + extension["name_assignee"] + "</td>\n" +
 				"<td>" + extension["username"] + "</td>\n" +
 				"<td>" + this.maskPassword(extension["secret"]) + "</td>\n" +
+				"<td>" + extension["email_assignee"] + "</td>\n" +
 				"<td>" +
 				"<div id=\"id-spinner-action-extension-" + extension["id_extension"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
 				"<img id=\"id-delete-extension-" + extension["id_extension"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
@@ -135,6 +137,8 @@ class Extension {
 		let id_pbx = this.ID_PBX;
 		let username = $("#id-extension-username").val();
 		let secret = $("#id-extension-secret").val();
+		let name_assignee = $("#id-extension-name-assignee").val();
+		let email_assignee = $("#id-extension-email-assignee").val();
 		if (username === "" || secret === "") {
 			let message = "Please complete all required fields";
 			alert(message);
@@ -143,7 +147,7 @@ class Extension {
 			$("#id-new-extension-submit").hide();
 			$("#id-spinner-new-extension").show();
 			let self = this;
-			GLOBAL.connection.createExtension(id_pbx, username, secret, function (data) {
+			GLOBAL.connection.createExtension(id_pbx, username, secret, name_assignee, email_assignee, function (data) {
 				self.displayExtensionCreation(data);
 			});
 		}

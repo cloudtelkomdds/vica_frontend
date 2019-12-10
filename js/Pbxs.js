@@ -36,8 +36,7 @@ class Pbxs {
 			let formattedPbx = "<tr>\n";
 			if (role === Constant.USER_TYPE_ADMIN) {
 				formattedPbx = formattedPbx +
-					"<td>" + pbx["id_user"] + "</td>\n" +
-					"<td>" + pbx["user_name"] + "</td>\n";
+					"<td>" + pbx["user_email"] + "</td>\n";
 			}
 			formattedPbx = formattedPbx +
 				"<td><a href='user_extension.html?id=" + pbx["id_pbx"] + "'>" + pbx["pbx_name"] + "</a></td>\n" +

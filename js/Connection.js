@@ -96,11 +96,13 @@ export class Connection {
         }
     }
 
-    createExtension(idPbx, username, secret, callback) {
+    createExtension(idPbx, username, secret, name_assignee, email_assignee, callback) {
         let data = {
             "id_pbx": idPbx,
             "username": username,
-            "secret": secret
+            "secret": secret,
+			"name_assignee": name_assignee,
+			"email_assignee": email_assignee
         };
         this.baseConnection.createExtension(data, callback);
     }
