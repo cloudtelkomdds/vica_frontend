@@ -8,6 +8,14 @@ class Extension {
 		this.ID_UPDATED_EXTENSION = -1;
 	}
 
+	maskPassword(password){
+		let maskedPassword = "";
+		for (let i = 0; i < password.length; i++) {
+			maskedPassword = maskedPassword + "*";
+		}
+		return maskedPassword
+	}
+
 	displayAllExtensions(data) {
 		let number = 0;
 		for (let extension of data) {
@@ -15,7 +23,7 @@ class Extension {
 			let formattedExtension = "<tr>\n" +
 				"<td>" + number + "</td>\n" +
 				"<td>" + extension["username"] + "</td>\n" +
-				"<td>" + extension["secret"] + "</td>\n" +
+				"<td>" + this.maskPassword(extension["secret"]) + "</td>\n" +
 				"<td>" +
 				"<div id=\"id-spinner-action-extension-" + extension["id_extension"] + "\" class=\"spinner-border text-primary\" role=\"status\" style=\"display: none;\"></div>" +
 				"<img id=\"id-delete-extension-" + extension["id_extension"] + "\" alt=\"Icon for deleting\" src=\"res/ic_trash.png\" style=\"width: 20px;\">" +
